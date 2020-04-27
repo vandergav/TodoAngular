@@ -11,8 +11,8 @@ db.connect((err) => {
 //@access   Public
 exports.getTransaction = async (req, res, next) => {
     // res.send('GET transaction');
-    console.log(req.params.id)
-    let sql = `SELECT * FROM todos WHERE uid = ${req.params.id}`;
+    const { id, title, complete } = req.body
+    let sql = `SELECT * FROM todos WHERE id = ${id}`;
     await db.query(sql, (err, result) => {
         if (err) throw err;
         console.log(result);
@@ -38,8 +38,9 @@ exports.getTransactions = async (req, res, next) => {
 //@access   Public
 exports.updateTransaction = async (req, res, next) => {
     // res.send('UPDATE transaction');
-    let newTitle = 'updated title';
-    let sql = `UPDATE todos SET title = '${newTitle}' WHERE uid = ${req.params.id}`
+    const { id, title, complete } = req.body
+    console.log(complete)
+    let sql = `UPDATE todos SET complete = ${complete} WHERE id = ${id}`
     await db.query(sql, (err, result) => {
         if (err) throw err;
         console.log(result);
@@ -52,8 +53,8 @@ exports.updateTransaction = async (req, res, next) => {
 //@access   Public
 exports.addTransaction = async (req, res, next) => {
     // res.send('POST transaction');
-    // const { uid, title, completed } = req.body
-    let todo = { uid: '1', title: 'express test user', completed: '1' }
+    const { id, title, complete } = req.body
+    let todo = { id: id, title: title, complete: complete }
     let sql = 'INSERT INTO todos SET ?'
     await db.query(sql, todo, (err, result) => {
         if (err) throw err;
@@ -67,7 +68,8 @@ exports.addTransaction = async (req, res, next) => {
 //@access   Public
 exports.deleteTransaction = async (req, res, next) => {
     // res.send('DELETE Transaction');
-    let sql = `DELETE FROM todos WHERE uid = ${req.params.id}`
+    console.log(req.params)
+    let sql = `DELETE FROM todos WHERE id = ${req.params.id}`
     await db.query(sql, (err, result) => {
         if (err) throw err;
         console.log(result);

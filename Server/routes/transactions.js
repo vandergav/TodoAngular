@@ -12,7 +12,8 @@ router
 router
     .route('/:id')
     .get(getTransaction)
-    .post(updateTransaction)
+    // .post(updateTransaction)
+    .put(updateTransaction)
     .delete(deleteTransaction)
 
 module.exports = router;
