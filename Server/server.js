@@ -6,6 +6,7 @@ const morgan = require('morgan');
 dotenv.config({ path: './config/config.env' });
 
 const transactions = require('./routes/transactions')
+const authentication = require('./routes/authentication')
 
 const app = express();
 
@@ -20,7 +21,20 @@ app.use(function (req, res, next) {
 
 app.use(express.json())
 
-app.use('/api/v1/transactions', transactions);
+app.use('/api/v1/sign-in', authentication)
+app.use('/api/v1/transactions', verifyToken, transactions);
+
+function verifyToken(req, res, next) {
+    const bearerHeader = req.headers['authorization'];
+    if (typeof bearerHeader !== 'undefined') {
+        const bearer = bearerHeader.split(' ')
+        const bearerToken = bearer[1]
+        req.token = bearerToken
+        next()
+    } else {
+        res.sendStatus(403);
+    }
+}
 
 const PORT = process.env.PORT || 5000;
 
