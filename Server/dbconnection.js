@@ -8,6 +8,7 @@ var db = mysql.createConnection({
     database: process.env.database
 });
 
+// ***DOCKER***
 // console.log(process.env.MYSQL_HOST)
 // console.log(process.env.MYSQL_USER)
 // console.log(process.env.MYSQL_PASSWORD)
