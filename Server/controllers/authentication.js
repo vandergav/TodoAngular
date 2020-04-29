@@ -90,4 +90,5 @@ exports.signinTransaction = async (req, res, next) => {
     // res.send(422, 'Invalid username and password');
 }
 
-exports.jwt = jwt
+// exports.jwt = jwt
+// exports.redisClient = redisClient

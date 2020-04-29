@@ -1,3 +1,5 @@
+// const { redisClient } = require('./authentication')
+
 var db = require('../dbconnection.js');
 db.connect((err) => {
     if (err) {
@@ -12,7 +14,7 @@ db.connect((err) => {
 exports.getTransaction = async (req, res, next) => {
     // res.send('GET transaction');
     const { id, title, complete } = req.body
-    let sql = `SELECT * FROM todos WHERE id = ${id}`;
+    let sql = `SELECT * FROM todos WHERE id = '${id}'`;
     await db.query(sql, (err, result) => {
         if (err) throw err;
         console.log(result);
@@ -40,7 +42,7 @@ exports.updateTransaction = async (req, res, next) => {
     // res.send('UPDATE transaction');
     const { id, title, complete } = req.body
     console.log(complete)
-    let sql = `UPDATE todos SET complete = ${complete} WHERE id = ${id}`
+    let sql = `UPDATE todos SET complete = ${complete} WHERE id = '${id}'`
     await db.query(sql, (err, result) => {
         if (err) throw err;
         console.log(result);
@@ -69,7 +71,7 @@ exports.addTransaction = async (req, res, next) => {
 exports.deleteTransaction = async (req, res, next) => {
     // res.send('DELETE Transaction');
     console.log(req.params)
-    let sql = `DELETE FROM todos WHERE id = ${req.params.id}`
+    let sql = `DELETE FROM todos WHERE id = '${req.params.id}'`
     await db.query(sql, (err, result) => {
         if (err) throw err;
         console.log(result);
